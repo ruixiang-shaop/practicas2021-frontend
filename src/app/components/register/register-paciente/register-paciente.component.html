@@ -1,0 +1,55 @@
+<div class="container" style="width:400px;margin-top:10px;">
+    <form [formGroup]="form" (ngSubmit)="register()" #myform="ngForm">
+        <div class="form-group">
+            <label for="paciente-usuario">Usuario:</label>
+            <input required id="paciente-usuario" placeholder="usuario"
+            formControlName="usuario" type="text" class="form-control">
+            <div *ngIf="form.get('usuario').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca el usuario</div>
+        </div>
+        <div class="form-group">
+            <label for="paciente-clave">Clave:</label>
+            <input id="paciente-clave" placeholder="clave"
+            formControlName="clave" type="password" class="form-control">
+            <div *ngIf="form.get('clave').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca la contraseña</div>
+            <div *ngIf="form.get('clave').hasError('minlength') && myform.submitted" class='alert alert-danger'>Debe tener al menos 6 caracteres</div>
+        </div>
+        <div class="form-group">
+            <label for="paciente-nombre">Nombre:</label>
+            <input id="paciente-nombre" placeholder="nombre"
+            formControlName="nombre" type="text" class="form-control">
+            <div *ngIf="form.get('nombre').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su nombre</div>
+        </div>
+        <div class="form-group">
+            <label for="paciente-apellidos">Apellidos:</label>
+            <input id="paciente-apellidos" placeholder="apellidos"
+            formControlName="apellidos" type="text" class="form-control">
+            <div *ngIf="form.get('apellidos').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca sus apellidos</div>
+        </div>
+        <div class="form-group">
+            <label for="paciente-nss">Número de seguridad social:</label>
+            <input id="paciente-nss" placeholder="número de seguridad social"
+            formControlName="nss" type="text" class="form-control">
+            <div *ngIf="form.get('nss').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su Número de la Seguridad Social</div>
+        </div>
+        <div class="form-group">
+            <label for="paciente-numTarjeta">Número de tarjeta:</label>
+            <input id="paciente-numTarjeta" placeholder="número de tarjeta"
+            formControlName="numTarjeta" type="text" class="form-control">
+            <div *ngIf="form.get('numTarjeta').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su número tarjeta</div>
+        </div>
+        <div class="form-group">
+            <label for="paciente-telefono">Teléfono:</label>
+            <input id="paciente-telefono" placeholder="teléfono"
+            formControlName="telefono" type="text" class="form-control">
+            <div *ngIf="form.get('telefono').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su teléfono</div>
+        </div>
+        <div class="form-group">
+            <label for="paciente-direccion">Dirección:</label>
+            <input id="paciente-direccion" placeholder="dirección"
+            formControlName="direccion" type="text" class="form-control">
+            <div *ngIf="form.get('direccion').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su dirección</div>
+        </div>
+        <button class="btn btn-primary" style="margin-left: 50px;"type="submit" (click)="register">Registrar</button>
+        <button class="btn btn-primary" style="margin-left: 100px;" (click)="form.reset()" routerLink="/login">Login</button>
+    </form>
+</div>

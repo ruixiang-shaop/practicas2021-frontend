@@ -1,0 +1,37 @@
+<div class="container" style="width:400px;margin-top:10px;">
+    <form [formGroup]="form" (ngSubmit)="register()" #myform="ngForm">
+        <div class="form-group">
+            <label for="medico-usuario">Usuario:</label>
+            <input required id="medico-usuario" placeholder="usuario"
+            formControlName="usuario" type="text" class="form-control">
+            <div *ngIf="form.get('usuario').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca el usuario</div>
+        </div>
+        <div class="form-group">
+            <label for="medico-clave">Clave:</label>
+            <input id="medico-clave" placeholder="clave"
+            formControlName="clave" type="password" class="form-control">
+            <div *ngIf="form.get('clave').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca la contraseña</div>
+            <div *ngIf="form.get('clave').hasError('minlength') && myform.submitted" class='alert alert-danger'>Debe tener al menos 6 caracteres</div>
+        </div>
+        <div class="form-group">
+            <label for="medico-nombre">Nombre:</label>
+            <input id="medico-nombre" placeholder="nombre"
+            formControlName="nombre" type="text" class="form-control">
+            <div *ngIf="form.get('nombre').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su nombre</div>
+        </div>
+        <div class="form-group">
+            <label for="medico-apellidos">Apellidos:</label>
+            <input id="medico-apellidos" placeholder="apellidos"
+            formControlName="apellidos" type="text" class="form-control">
+            <div *ngIf="form.get('apellidos').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca sus apellidos</div>
+        </div>
+        <div class="form-group">
+            <label for="medico-numColegiado">Número de colegiado:</label>
+            <input id="medico-numColegiado" placeholder="número de colegiado"
+            formControlName="numColegiado" type="text" class="form-control">
+            <div *ngIf="form.get('numColegiado').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca el número de colegiado</div>
+        </div>
+        <button class="btn btn-primary" style="margin-left: 50px;"type="submit" (click)="register">Registrar</button>
+        <button class="btn btn-primary" style="margin-left: 100px;" (click)="form.reset()" routerLink="/login">Login</button>
+    </form>
+</div>
