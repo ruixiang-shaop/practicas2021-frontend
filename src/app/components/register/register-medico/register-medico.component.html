@@ -5,6 +5,7 @@
             <input required id="medico-usuario" placeholder="usuario"
             formControlName="usuario" type="text" class="form-control">
             <div *ngIf="form.get('usuario').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca el usuario</div>
+            <div *ngIf="form.get('usuario').hasError('usuarioExists') && myform.submitted" class='alert alert-danger'>El usuario ya está en uso</div>
         </div>
         <div class="form-group">
             <label for="medico-clave">Clave:</label>
