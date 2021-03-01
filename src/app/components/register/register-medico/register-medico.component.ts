@@ -14,12 +14,12 @@ export class RegisterMedicoComponent implements OnInit {
   medico: MedicoRegistro;
 
   form = new FormGroup({
-    usuario: new FormControl('', [Validators.required]),
-    clave: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    nombre: new FormControl('', [Validators.required]),
-    apellidos: new FormControl('', [Validators.required]),
-    numColegiado: new FormControl('', [Validators.required]),
-  })
+    usuario: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
+    clave: new FormControl('', {validators: [Validators.required, Validators.minLength(6)], updateOn: 'blur'}),
+    nombre: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
+    apellidos: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
+    numColegiado: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
+  });
   
   constructor(private registerService: RegisterService) { }
 

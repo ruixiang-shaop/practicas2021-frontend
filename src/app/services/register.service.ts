@@ -14,9 +14,14 @@ export class RegisterService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
+
+  httpOptionsPlainText = {
+    headers: new HttpHeaders({ 'Content-Type': 'text/plain' })
+  };
   
-  private registerMedicoUrl = '/api/medicos/add';  // URL to web api
-  private registerPacienteUrl = '/api/pacientes/add';  // URL to web api
+  private registerMedicoUrl = '/api/medicos/add';
+  private registerPacienteUrl = '/api/pacientes/add';
+  private uniqueUsuarioUrl = 'api/usuarios/usuarioExists';
   
   constructor(private http: HttpClient) { }
 
@@ -45,9 +50,17 @@ export class RegisterService {
   }
   /** POST: add a new medico to the server */
   addPaciente(paciente: PacienteRegistro): Observable<Paciente> {
-    return this.http.post<Paciente>(this.registerMedicoUrl, paciente, this.httpOptions)
+    return this.http.post<Paciente>(this.registerPacienteUrl, paciente, this.httpOptions)
       .pipe(
         catchError(this.handleError<Paciente>('addPaciente'))
       );
   }
+
+  checkIfUsuarioExists(username: string): Observable<string> {
+    return this.http.post<string>(this.uniqueUsuarioUrl, username, this.httpOptionsPlainText)
+      .pipe(
+        catchError(this.handleError<string>('checkIfUsuarioExists'))
+      )
+  }
+
 }
