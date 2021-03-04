@@ -13,7 +13,7 @@
             formControlName="clave" type="password" class="form-control">
             <div *ngIf="form.get('clave').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca la contraseña</div>
         </div>
-        <button class="btn btn-primary" style="margin-left: 50px;" type="submit">Login</button>
+        <button class="btn btn-primary" style="margin-left: 50px;" type="submit" (click)="login">Login</button>
         <button class="btn btn-primary" style="margin-left: 100px;" routerLink="/register">Registrarse</button>
     </form>
 </div>
