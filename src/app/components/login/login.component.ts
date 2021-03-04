@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   
   @Input()
   usuario: Usuario;
+  error: boolean;
+  errorMessage: string;
 
   form = new FormGroup({
     usuario: new FormControl('', [Validators.required]),
@@ -31,10 +33,13 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.usuario).subscribe(
         (res) => {
           if (typeof res === 'string') {
-            console.log("Error:"+res)
+            this.errorMessage = res;
+            this.error = true;
           } else if ('numColegiado' in  res) {
+            this.error = false;
             console.log(res)
           } else if ('nss' in res) {
+            this.error = false;
             console.log(res)
           }
         },
