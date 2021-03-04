@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Medico } from 'src/app/models/medico';
-import { Paciente } from 'src/app/models/paciente';
 import { LoginService } from 'src/app/services/login.service';
-import { Usuario } from '../../models/usuario'
+import { UpdateAfterLoginService } from 'src/app/services/update-after-login.service';
+import { Usuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +22,8 @@ export class LoginComponent implements OnInit {
     clave: new FormControl('', [Validators.required])
   })
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router,
+    private updateAfterLoginService: UpdateAfterLoginService) { }
 
   ngOnInit(): void {
   }
@@ -38,9 +38,11 @@ export class LoginComponent implements OnInit {
             this.error = true;
           } else if ('numColegiado' in  res) {
             this.error = false;
-            this.router.navigateByUrl("medico")
+            this.updateAfterLoginService.setMedico(res);
+            this.router.navigateByUrl("medico");
           } else if ('nss' in res) {
             this.error = false;
+            this.updateAfterLoginService.setPaciente(res);
             this.router.navigateByUrl("paciente")
           }
         },
