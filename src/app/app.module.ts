@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RegisterPacienteComponent } from './components/register/register-paciente/register-paciente.component';
 import { RegisterMedicoComponent } from './components/register/register-medico/register-medico.component';
 import { MedicoComponent } from './components/medico/medico.component';
+import { PacienteComponent } from './components/paciente/paciente.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { MedicoComponent } from './components/medico/medico.component';
     RegisterComponent,
     RegisterPacienteComponent,
     RegisterMedicoComponent,
-    MedicoComponent
+    MedicoComponent,
+    PacienteComponent
   ],
   imports: [
     BrowserModule,

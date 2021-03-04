@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Medico } from 'src/app/models/medico';
 import { Paciente } from 'src/app/models/paciente';
 import { LoginService } from 'src/app/services/login.service';
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
     clave: new FormControl('', [Validators.required])
   })
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -37,10 +38,10 @@ export class LoginComponent implements OnInit {
             this.error = true;
           } else if ('numColegiado' in  res) {
             this.error = false;
-            console.log(res)
+            this.router.navigateByUrl("medico")
           } else if ('nss' in res) {
             this.error = false;
-            console.log(res)
+            this.router.navigateByUrl("paciente")
           }
         },
       )
