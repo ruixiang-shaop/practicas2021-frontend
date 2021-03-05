@@ -6,7 +6,7 @@ export class Cita {
     id: number;
     fechaHora: Date;
     motivoCita: string;
-    paciente: string;
-    medico: string;
+    paciente: Paciente;
+    medico: Medico;
     diagnostico: Diagnostico;
 }

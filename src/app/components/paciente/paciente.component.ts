@@ -30,6 +30,7 @@ export class PacienteComponent implements OnInit {
   }
   setPaciente(paciente: Paciente) {
     this.paciente = paciente;
+    console.log(this.paciente)
   }
 
 }
