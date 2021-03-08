@@ -12,9 +12,11 @@ import { RegisterPacienteComponent } from './components/register/register-pacien
 import { RegisterMedicoComponent } from './components/register/register-medico/register-medico.component';
 import { MedicoComponent } from './components/medico/medico.component';
 import { PacienteComponent } from './components/paciente/paciente.component';
-import { CitaComponent } from './components/cita/cita.component';
+import { ModalModule } from './shared/_modal';
 
 import localeEs from '@angular/common/locales/es';
+import { CitaPacienteComponent } from './components/cita-paciente/cita-paciente.component';
+import { CitaMedicoComponent } from './components/cita-medico/cita-medico.component';
 registerLocaleData(localeEs, 'es')
 
 @NgModule({
@@ -26,7 +28,8 @@ registerLocaleData(localeEs, 'es')
     RegisterMedicoComponent,
     MedicoComponent,
     PacienteComponent,
-    CitaComponent
+    CitaPacienteComponent,
+    CitaMedicoComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ registerLocaleData(localeEs, 'es')
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    ModalModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
