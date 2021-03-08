@@ -29,6 +29,10 @@ export class MedicoComponent implements OnInit {
 
   setMedico(medico: Medico) {
     this.medico = medico;
+    // Convert date as string to Date type
+    for (var i = 0; i < this.medico.citas.length; i++) {
+      this.medico.citas[i].fechaHora = new Date(this.medico.citas[i].fechaHora);
+    }
     this.medico.citas.sort((a, b) => a.fechaHora.getDate() - b.fechaHora.getDate())
   }
   

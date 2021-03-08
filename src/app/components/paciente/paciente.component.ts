@@ -30,6 +30,10 @@ export class PacienteComponent implements OnInit {
   }
   setPaciente(paciente: Paciente) {
     this.paciente = paciente;
+    // Convert date as string to Date type
+    for (var i = 0; i < this.paciente.citas.length; i++) {
+      this.paciente.citas[i].fechaHora = new Date(this.paciente.citas[i].fechaHora);
+    }
     this.paciente.citas.sort((a, b) => a.fechaHora.getDate() - b.fechaHora.getDate())
   }
 
