@@ -30,4 +30,10 @@ export class MedicoComponent implements OnInit {
   setMedico(medico: Medico) {
     this.medico = medico;
   }
+  
+  logout() {
+    this.subscription.unsubscribe();
+    this.updateAfterLoginService.setMedico(null);
+    this.medico = null;
+  }
 }

@@ -1,3 +1,4 @@
+import { HostListener } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Paciente } from 'src/app/models/paciente';
@@ -30,7 +31,11 @@ export class PacienteComponent implements OnInit {
   }
   setPaciente(paciente: Paciente) {
     this.paciente = paciente;
-    console.log(this.paciente)
   }
 
+  logout() {
+    this.subscription.unsubscribe();
+    this.updateAfterLoginService.setPaciente(null);
+    this.paciente = null;
+  }
 }
