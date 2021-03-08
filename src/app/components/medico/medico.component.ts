@@ -29,6 +29,7 @@ export class MedicoComponent implements OnInit {
 
   setMedico(medico: Medico) {
     this.medico = medico;
+    this.medico.citas.sort((a, b) => a.fechaHora.getDate() - b.fechaHora.getDate())
   }
   
   logout() {

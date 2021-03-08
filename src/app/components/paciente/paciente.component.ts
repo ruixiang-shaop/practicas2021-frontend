@@ -1,4 +1,3 @@
-import { HostListener } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Paciente } from 'src/app/models/paciente';
@@ -31,6 +30,7 @@ export class PacienteComponent implements OnInit {
   }
   setPaciente(paciente: Paciente) {
     this.paciente = paciente;
+    this.paciente.citas.sort((a, b) => a.fechaHora.getDate() - b.fechaHora.getDate())
   }
 
   logout() {
