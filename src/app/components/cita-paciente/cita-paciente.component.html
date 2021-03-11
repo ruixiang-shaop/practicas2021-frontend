@@ -1,6 +1,32 @@
-<p>Se puede editar: {{edit}}</p>
-<p>{{cita.fechaHora | date:'medium'}}</p>
-<p>{{cita.motivoCita}}</p>
-<p>{{cita.medico.nombre}} {{cita.medico.apellidos}}</p>
-<p>{{cita.diagnostico?.valoracionEspecialista}}</p>
-<p>{{cita.diagnostico?.enfermedad}}</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="cita-fechaHora">Fecha y hora:</label>
+        <input id="cita-fechaHora" formControlName="fechaHora" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="cita-motivoCita">Motivo de la cita:</label>
+        <textarea id="cita-motivoCita" formControlName="motivoCita" type="text" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="cita-medico">Médico:</label>
+        <select *ngIf="!readOnly" id="cita-medico" formControlName="medico" class="form-control">
+            <option *ngFor="let medico of medicos">
+                {{medico.nombre}} {{medico.apellidos}}
+            </option>
+        </select>
+        <input *ngIf="readOnly" id="cita-medico" formControlName="medico" type="text" class="form-control">
+    </div>
+    <div *ngIf="cita?.diagnostico">
+        <div class="form-group">
+            <label for="cita-valoracion">Valoración del especialista:</label>
+            <textarea disabled id="cita-valoracion" formControlName="valoracionEspecialista" type="text" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="cita-enfermedad">Enfermedad:</label>
+            <textarea disabled id="cita-enfermedad" formControlName="enfermedad" type="text" class="form-control"></textarea>
+        </div>
+    </div>
+    <button *ngIf="!isReadOnly()" class="btn btn-primary" type="submit">Crear</button>
+    <button *ngIf="isReadOnly()" class="btn btn-primary" (click)="cancel()">Cerrar</button>
+    <button *ngIf="!isReadOnly()" class="btn btn-primary" style="float:right" (click)="cancel()">Cerrar</button>
+</form>

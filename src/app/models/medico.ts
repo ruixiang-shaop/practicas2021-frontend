@@ -8,4 +8,8 @@ export class Medico {
     numColegiado: string;
     pacientes: Paciente[];
     citas: Cita[];
+
+    public equals(med: Medico): boolean {
+        return this.id == med.id;
+    }
 }
