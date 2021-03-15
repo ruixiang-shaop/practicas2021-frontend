@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Cita } from 'src/app/models/cita';
 import { Paciente } from 'src/app/models/paciente';
+import { CitaService } from 'src/app/services/cita.service';
 import { UpdateAfterLoginService } from 'src/app/services/update-after-login.service';
 import { ModalService } from 'src/app/shared/_modal';
 
@@ -16,7 +17,7 @@ export class PacienteComponent implements OnInit {
   private subscription: Subscription;
 
   constructor(private updateAfterLoginService: UpdateAfterLoginService,
-    private modalService: ModalService) {
+    private modalService: ModalService, private citaService: CitaService) {
     this.subscription = this.updateAfterLoginService.getPaciente().subscribe(
       value => {
         if (value) this.setPaciente(value)
@@ -43,6 +44,13 @@ export class PacienteComponent implements OnInit {
 
   addCita(cita: Cita) {
     this.paciente.citas.push(cita);
+  }
+
+  deleteCita(index: number) {
+    this.citaService.deleteCita(this.paciente.citas[index]).subscribe(
+      error => { console.log(error); },
+      ()=> { this.paciente.citas.splice(index, 1)}
+    );
   }
 
   openModal(id: string) {

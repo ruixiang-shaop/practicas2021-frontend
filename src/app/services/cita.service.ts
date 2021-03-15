@@ -50,7 +50,8 @@ export class CitaService {
   }
 
   deleteCita(cita: Cita): Observable<void> {
-    return this.http.post<void>(this.updateCitaUrl, cita, this.httpOptions)
+    const url = `${this.deleteCitaUrl}/${cita.id}`;
+    return this.http.delete<void>(url, this.httpOptions)
       .pipe(
         catchError(this.handleError<void>('deleteCita'))
       );
