@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Cita } from 'src/app/models/cita';
 import { Paciente } from 'src/app/models/paciente';
 import { UpdateAfterLoginService } from 'src/app/services/update-after-login.service';
 import { ModalService } from 'src/app/shared/_modal';
@@ -38,6 +39,10 @@ export class PacienteComponent implements OnInit {
       this.paciente.citas[i].fechaHora = new Date(this.paciente.citas[i].fechaHora);
     }
     this.paciente.citas.sort((a, b) => a.fechaHora.getDate() - b.fechaHora.getDate())
+  }
+
+  addCita(cita: Cita) {
+    this.paciente.citas.push(cita);
   }
 
   openModal(id: string) {

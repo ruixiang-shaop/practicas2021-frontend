@@ -19,13 +19,13 @@
             <th scope="col">
                 <button type="button" class="btn btn-primary" (click)="openModal('citas-create-modal')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                 <jw-modal id="citas-create-modal">
-                    <app-cita-paciente [medicos]="paciente.medicos" [readOnly]="false" [modalId]="'citas-create-modal'"></app-cita-paciente>
+                    <app-cita-paciente (newCitaEvent)="addCita($event)" [paciente]="paciente" [medicos]="paciente.medicos" [readOnly]="false" [modalId]="'citas-create-modal'"></app-cita-paciente>
                 </jw-modal>
             </th> <!-- Contains Edit and Delete button for each Cita -->
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let cita of paciente.citas; let i = index">
+        <tr *ngFor="let cita of paciente.citas; let i = index;">
             <th scope="row">{{cita.id}}</th>
             <th>{{cita.fechaHora | date:'medium'}}</th>
             <th>{{cita.motivoCita}}</th>
