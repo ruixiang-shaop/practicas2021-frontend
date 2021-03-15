@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Cita } from '../models/cita';
 
@@ -15,45 +15,30 @@ export class CitaService {
   private addCitaUrl = '/api/citas/add';
   private updateCitaUrl = '/api/citas/update';
   private deleteCitaUrl = '/api/citas/delete';
+
+  private cita: BehaviorSubject<Cita> = new BehaviorSubject<Cita>(null);
   
   constructor(private http: HttpClient) { }
+  
 
-    /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+  getCita(): Observable<Cita> {
+    return this.cita.asObservable();
+  }
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+  setCita(cita: Cita) { 
+    this.cita.next(cita);  
   }
 
   addCita(cita: Cita): Observable<Cita> {
-    return this.http.post<Cita>(this.addCitaUrl, cita, this.httpOptions)
-      .pipe(
-        catchError(this.handleError<Cita>('addCita'))
-      );
+    return this.http.post<Cita>(this.addCitaUrl, cita, this.httpOptions);
   }
 
-  updateCita(cita: Cita): Observable<void> {
-    return this.http.post<void>(this.updateCitaUrl, cita, this.httpOptions)
-      .pipe(
-        catchError(this.handleError<void>('updateCita'))
-      );
+  updateCita(cita: Cita): Observable<Cita> {
+    return this.http.post<Cita>(this.updateCitaUrl, cita, this.httpOptions);
   }
 
-  deleteCita(cita: Cita): Observable<void> {
+  deleteCita(cita: Cita): Observable<Cita> {
     const url = `${this.deleteCitaUrl}/${cita.id}`;
-    return this.http.delete<void>(url, this.httpOptions)
-      .pipe(
-        catchError(this.handleError<void>('deleteCita'))
-      );
+    return this.http.delete<Cita>(url, this.httpOptions);
   }
 }

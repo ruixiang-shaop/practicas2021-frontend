@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Cita } from 'src/app/models/cita';
 import { Medico } from 'src/app/models/medico';
@@ -24,8 +24,6 @@ export class CitaPacienteComponent implements OnInit {
   cita: Cita;
   @Input()
   paciente: Paciente;
-  @Output()
-  citaRet = new EventEmitter<Cita>();
   @Input()
   readOnly: boolean;
   @Input()
@@ -80,23 +78,15 @@ export class CitaPacienteComponent implements OnInit {
     }
     this.modalService.close(this.modalId);
   }
+
   onSubmit(): void {
     if (this.form.valid && !this.readOnly) {
       this.cita.fechaHora = moment(this.form.controls.fechaHora.value, 'DD-MM-YYYY hh:mm').toDate();
       this.cita.motivoCita = this.form.controls.motivoCita.value;
       this.cita.medico = this.form.controls.medico.value;
       this.cita.paciente = this.paciente;
-      this.citaService.addCita(this.cita)
-      .subscribe(
-        error => { console.log(error); },
-        (c)=>{this.cita = c;}
-      )
-      this.citaRet.emit(this.cita);
+      this.citaService.setCita(this.cita);
       this.cancel();
     }
-  }
-  
-  setDate(date: Date) {
-    this.form.controls.fechaHora.setValue(date);
   }
 }

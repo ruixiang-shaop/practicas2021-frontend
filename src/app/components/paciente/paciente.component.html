@@ -19,22 +19,22 @@
             <th scope="col">
                 <button type="button" class="btn btn-primary" (click)="openModal('citas-create-modal')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                 <jw-modal id="citas-create-modal">
-                    <app-cita-paciente (newCitaEvent)="addCita($event)" [paciente]="paciente" [medicos]="paciente.medicos" [readOnly]="false" [modalId]="'citas-create-modal'"></app-cita-paciente>
+                    <app-cita-paciente [paciente]="paciente" [medicos]="paciente.medicos" [readOnly]="false" [modalId]="'citas-create-modal'"></app-cita-paciente>
                 </jw-modal>
             </th> <!-- Contains Edit and Delete button for each Cita -->
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let cita of paciente.citas; let i = index;">
-            <th scope="row">{{cita.id}}</th>
-            <th>{{cita.fechaHora | date:'medium'}}</th>
-            <th>{{cita.motivoCita}}</th>
-            <th>{{cita.medico.nombre}} {{cita.medico.apellidos}}</th>
-            <th><button type="button" class="btn btn-primary" (click)="openModal('citas-read-modal-'+i)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
+            <td scope="row">{{cita.id}}</td>
+            <td>{{cita.fechaHora | date:'medium'}}</td>
+            <td>{{cita.motivoCita}}</td>
+            <td>{{cita.medico.nombre}} {{cita.medico.apellidos}}</td>
+            <td><button type="button" class="btn btn-primary" (click)="openModal('citas-read-modal-'+cita.id)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
                 <span>&nbsp;</span>
-                <button type="button" class="btn btn-danger" (click)="deleteCita(i)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></th>
-            <jw-modal [id]="'citas-read-modal-'+i">
-                <app-cita-paciente [cita]="cita" [medicos]="paciente.medicos" [readOnly]="true" [modalId]="'citas-read-modal-'+i"></app-cita-paciente>
+                <button type="button" class="btn btn-danger" (click)="deleteCita(i)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+            <jw-modal [id]="'citas-read-modal-'+cita.id">
+                <app-cita-paciente [cita]="cita" [medicos]="paciente.medicos" [readOnly]="true" [modalId]="'citas-read-modal-'+cita.id"></app-cita-paciente>
             </jw-modal>
         </tr>
     </tbody>
