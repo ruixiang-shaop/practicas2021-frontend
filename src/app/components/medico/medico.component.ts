@@ -15,7 +15,8 @@ export class MedicoComponent implements OnInit {
 
   medico: Medico;
   private subscription: Subscription;
-  private subscriptionCita: Subscription;
+  private subscriptionNewCita: Subscription;
+  private subscriptionUpdateCita: Subscription;
 
   constructor(private updateAfterLoginService: UpdateAfterLoginService,
     private modalService: ModalService, private citaService: CitaService) {
@@ -24,14 +25,28 @@ export class MedicoComponent implements OnInit {
         if (value) this.setMedico(value);
       }
     );
-    this.subscriptionCita = this.citaService.retrieveNewCita().subscribe(
+    this.subscriptionNewCita = this.citaService.retrieveNewCita().subscribe(
       value => {
         if (value) this.addCita(value);
+      }
+    );
+    this.subscriptionUpdateCita = this.citaService.retrieveUpdateCita().subscribe(
+      value => {
+        if (value) this.updateCita(value);
       }
     );
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.subscriptionNewCita.unsubscribe();
+    this.subscriptionUpdateCita.unsubscribe();
+    this.updateAfterLoginService.setMedico(null);
+    this.citaService.sendNewCita(null);
+    this.citaService.sendUpdateCita(null);
   }
 
   setMedico(medico: Medico) {
@@ -54,6 +69,16 @@ export class MedicoComponent implements OnInit {
     );
   }
 
+  updateCita(cita: Cita) {
+    this.citaService.updateCita(cita).subscribe(
+      (data) => {
+        this.medico.citas.push(data);
+      },
+      (error) => alert("No se ha podido actualizar la cita"),
+      () => {}
+    );
+  }
+
   deleteCita(index: number) {
     this.citaService.deleteCita(this.medico.citas[index]).subscribe(
       (data) => this.medico.citas.splice(index, 1),
@@ -72,8 +97,11 @@ export class MedicoComponent implements OnInit {
 
   logout() {
     this.subscription.unsubscribe();
-    this.subscriptionCita.unsubscribe();
+    this.subscriptionNewCita.unsubscribe();
+    this.subscriptionUpdateCita.unsubscribe();
     this.updateAfterLoginService.setMedico(null);
+    this.citaService.sendNewCita(null);
+    this.citaService.sendUpdateCita(null);
     this.medico = null;
   }
 }

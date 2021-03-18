@@ -1,10 +1,10 @@
 <mat-tab-group mat-align-tabs="start" backgroundColor="primary">
     <mat-tab label="Cita">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" #myform="ngForm">
+        <form [formGroup]="form" (ngSubmit)="onSubmitCita()" #myform="ngForm">
             <div class="form-group">
                 <label for="cita-fechaHora">Fecha y hora:</label>
                 <input *ngIf="readOnly" id="cita-fechaHora" formControlName="fechaHora" type="text" class="form-control">
-                <input *ngIf="!readOnly" type="datetime-local" id="cita-fechaHora" placeholder="dd-MM-yyyy HH:mm" formControlName="fechaHora" class="form-control">  
+                <input *ngIf="!readOnly" id="cita-fechaHora" placeholder="dd-MM-yyyy HH:mm" formControlName="fechaHora" class="form-control">  
                 <div *ngIf="form.get('fechaHora').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca una fecha</div>
                 <div *ngIf="form.get('fechaHora').hasError('pattern') && myform.submitted" class='alert alert-danger'>Formato de fecha erróneo</div>
                 <div *ngIf="form.get('fechaHora').hasError('invalidDate') && myform.submitted" class='alert alert-danger'>No existe esta fecha</div>
@@ -31,15 +31,20 @@
             <button *ngIf="!readOnly" class="btn btn-primary" style="float:right" (click)="cancel()">Cerrar</button>
         </form>
     </mat-tab>
-    <mat-tab *ngIf="cita?.diagnostico" label="Diagnóstico">
-        <form [formGroup]="form2" #myform2="ngForm">
+    <mat-tab *ngIf="cita?.diagnostico || (!readOnly && !create)" label="Diagnóstico">
+        <form [formGroup]="form2" (ngSubmit)="onSubmitDiag()" #myform2="ngForm">
             <div class="form-group">
                 <label for="cita-valoracion">Valoración del especialista:</label>
                 <textarea id="cita-valoracion" formControlName="valoracionEspecialista" type="text" class="form-control"></textarea>
+            <!--   <div *ngIf="(!readOnly && !create) && form2.get('valoracion').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su valoración</div>
+            !-->
             </div>
             <div class="form-group">
                 <label for="cita-enfermedad">Enfermedad:</label>
                 <textarea id="cita-enfermedad" formControlName="enfermedad" type="text" class="form-control"></textarea>
+            <!--    <div *ngIf="(!readOnly && !create) && form2.get('enfermedad').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca la enfermedad</div>
+           
+            -->
             </div>
             <button *ngIf="!readOnly && !create" class="btn btn-primary" type="submit">Guardar</button>
             <button *ngIf="!readOnly && !create" class="btn btn-primary" style="float:right" (click)="cancel()">Cerrar</button>

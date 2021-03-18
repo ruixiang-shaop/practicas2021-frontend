@@ -15,25 +15,35 @@ export class CitaService {
   private updateCitaUrl = '/api/citas/update';
   private deleteCitaUrl = '/api/citas/delete';
 
-  private cita: BehaviorSubject<Cita> = new BehaviorSubject<Cita>(null);
+  private newCita: BehaviorSubject<Cita> = new BehaviorSubject<Cita>(null);
+  private updatedCita: BehaviorSubject<Cita> = new BehaviorSubject<Cita>(null);
   
   constructor(private http: HttpClient) { }
   
 
   retrieveNewCita(): Observable<Cita> {
-    return this.cita.asObservable();
+    return this.newCita.asObservable();
   }
 
   sendNewCita(cita: Cita) { 
-    this.cita.next(cita);  
+    this.newCita.next(cita);  
   }
+
+  retrieveUpdateCita(): Observable<Cita> {
+    return this.updatedCita.asObservable();
+  }
+
+  sendUpdateCita(cita: Cita) { 
+    this.updatedCita.next(cita);  
+  }
+
 
   addCita(cita: Cita): Observable<Cita> {
     return this.http.post<Cita>(this.addCitaUrl, cita, this.httpOptions);
   }
 
   updateCita(cita: Cita): Observable<Cita> {
-    return this.http.post<Cita>(this.updateCitaUrl, cita, this.httpOptions);
+    return this.http.put<Cita>(this.updateCitaUrl, cita, this.httpOptions);
   }
 
   deleteCita(cita: Cita): Observable<Cita> {

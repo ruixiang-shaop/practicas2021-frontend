@@ -74,6 +74,7 @@ export class PacienteComponent implements OnInit {
     this.subscription.unsubscribe();
     this.subscriptionCita.unsubscribe();
     this.updateAfterLoginService.setPaciente(null);
+    this.citaService.sendNewCita(null);
     this.paciente = null;
   }
 }

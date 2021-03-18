@@ -7,6 +7,7 @@ import { ModalService } from 'src/app/shared/_modal';
 import * as moment from 'moment';
 import { Paciente } from 'src/app/models/paciente';
 import { Diagnostico } from 'src/app/models/diagnostico';
+import { DiagnosticoService } from 'src/app/services/diagnostico.service';
 
 @Component({
   selector: 'app-cita-medico',
@@ -42,7 +43,8 @@ export class CitaMedicoComponent implements OnInit {
     enfermedad: new FormControl('', {validators: [Validators.required], updateOn: 'blur'})
   })
 
-  constructor(private modalService: ModalService, private citaService: CitaService) {
+  constructor(private modalService: ModalService, private citaService: CitaService,
+    private diagnosticoService: DiagnosticoService) {
   }
 
   validDate(): ValidatorFn {  
@@ -55,7 +57,7 @@ export class CitaMedicoComponent implements OnInit {
     if (this.readOnly || !this.create) {
       let pacienteStr = this.cita.paciente.nombre + " " + this.cita.paciente.apellidos; 
       this.form.patchValue({
-        fechaHora: this.cita.fechaHora.toLocaleString(),
+        fechaHora: moment(this.cita.fechaHora).format('DD-MM-YYYY hh:mm'),
         motivoCita: this.cita.motivoCita,
         paciente: pacienteStr
       })
@@ -92,13 +94,11 @@ export class CitaMedicoComponent implements OnInit {
         this.form.reset();
         let pacienteStr = this.cita.paciente.nombre + " " + this.cita.paciente.apellidos; 
         this.form.patchValue({
-          fechaHora: this.cita.fechaHora.toLocaleString(),
+          fechaHora: moment(this.cita.fechaHora).format('DD-MM-YYYY hh:mm'),
           motivoCita: this.cita.motivoCita,
           paciente: pacienteStr
         })
         if (this.cita.diagnostico) {
-          this.myNgForm2.resetForm();
-          this.form2.reset();
           this.form2.patchValue({
             valoracionEspecialista: this.cita.diagnostico.valoracionEspecialista,
             enfermedad: this.cita.diagnostico.enfermedad
@@ -109,14 +109,37 @@ export class CitaMedicoComponent implements OnInit {
     this.modalService.close(this.modalId);
   }
 
-  onSubmit(): void {
-    if (this.form.valid && !this.readOnly) {
+  onSubmitCita(): void {
+    // Create
+    if (this.form.valid && this.form.dirty && !this.readOnly && this.create) {
       this.cita.fechaHora = moment(this.form.controls.fechaHora.value, 'DD-MM-YYYY hh:mm').toDate();
       this.cita.motivoCita = this.form.controls.motivoCita.value;
       this.cita.paciente = this.form.controls.paciente.value;
       this.cita.medico = this.medico;
       this.citaService.sendNewCita(this.cita);
       this.cancel();
+    // Update
+    } else if (this.form.valid && this.form.dirty && this.readOnly && !this.create) {
+      this.cita.fechaHora = moment(this.form.controls.fechaHora.value, 'DD-MM-YYYY hh:mm').toDate();
+      this.cita.motivoCita = this.form.controls.motivoCita.value;
+      this.cita.paciente = this.form.controls.paciente.value;
+      this.cita.medico = this.medico;
+      this.citaService.updateCita(this.cita);
+      this.cancel();
+    }
+  }
+
+  onSubmitDiag(): void {
+    // Create
+    if (this.form.valid && this.form.dirty && !this.readOnly && this.create) {
+      let diag: Diagnostico = new Diagnostico();
+      diag.cita=this.cita;
+      diag.valoracionEspecialista = this.form2.controls.valoracionEspecialista.value;
+      diag.enfermedad = this.form2.controls.enfermedad.value;
+      this.diagnosticoService.sendNewDiagnostico(diag);
+      this.cancel();
+    // Update
+    } else if (this.form.valid && !this.readOnly && !this.create) {
     }
   }
 
