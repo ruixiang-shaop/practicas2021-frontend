@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Cita, compareCita } from 'src/app/models/cita';
 import { Paciente } from 'src/app/models/paciente';
 import { CitaService } from 'src/app/services/cita.service';
@@ -25,7 +24,7 @@ export class PacienteComponent implements OnInit {
         if (value) this.setPaciente(value);
       }
     );
-    this.subscriptionCita = this.citaService.getCita().subscribe(
+    this.subscriptionCita = this.citaService.retrieveNewCita().subscribe(
       value => {
         if (value) this.addCita(value);
       }

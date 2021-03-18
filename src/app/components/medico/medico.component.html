@@ -12,24 +12,35 @@
 <table class="table">
     <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Fecha</th>
-          <th scope="col">Motivo de la cita</th>
-          <th scope="col">Paciente</th>
-          <th scope="col"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></th> <!-- Edit and Delete button -->
+            <th scope="col">#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Motivo de la cita</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">
+                <button type="button" class="btn btn-primary" (click)="openModal('citas-create-modal')"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                <jw-modal id="citas-create-modal">
+                    <app-cita-medico [medico]="medico" [pacientes]="medico.pacientes" [readOnly]="false" [create]="true" [modalId]="'citas-create-modal'"></app-cita-medico>
+                </jw-modal>
+            </th> <!-- Edit and Delete button -->
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let cita of medico.citas">
-            <th scope="row">{{cita.id}}</th>
-            <th>{{cita.fechaHora | date:'medium'}}</th>
-            <th>{{cita.motivoCita}}</th>
-            <th>{{cita.paciente.nombre}} {{cita.paciente.apellidos}}</th>
-            <th><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
+        <tr *ngFor="let cita of medico.citas; let i = index;">
+            <td scope="row">{{cita.id}}</td>
+            <td>{{cita.fechaHora | date:'medium'}}</td>
+            <td>{{cita.motivoCita}}</td>
+            <td>{{cita.paciente.nombre}} {{cita.paciente.apellidos}}</td>
+            <td><button type="button" class="btn btn-primary" (click)="openModal('citas-read-modal-'+cita.id)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>
                 <span>&nbsp;</span>
-                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                <button type="button" class="btn btn-success"(click)="openModal('citas-update-modal-'+cita.id)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
                 <span>&nbsp;</span>
-                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></th>
+                <button type="button" class="btn btn-danger" (click)="deleteCita(i)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+            <jw-modal [id]="'citas-read-modal-'+cita.id">
+                <app-cita-medico [cita]="cita" [pacientes]="medico.pacientes" [readOnly]="true" [modalId]="'citas-read-modal-'+cita.id"></app-cita-medico>
+            </jw-modal>
+            <jw-modal [id]="'citas-update-modal-'+cita.id">
+                <app-cita-medico [cita]="cita" [pacientes]="medico.pacientes" [readOnly]="false" [create]="false" [modalId]="'citas-update-modal-'+cita.id"></app-cita-medico>
+            </jw-modal>
         </tr>
     </tbody>
 </table>

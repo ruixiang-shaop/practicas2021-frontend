@@ -7,12 +7,6 @@ import { ModalService } from 'src/app/shared/_modal';
 import * as moment from 'moment';
 import { Paciente } from 'src/app/models/paciente';
 
-
-export function validDate(): ValidatorFn {  
-  return (control: AbstractControl): { [key: string]: any } | null =>
-    moment(control.value, 'DD-MM-YYYY hh:mm').isValid()
-          ? null : {invalidDate: true}}
-
 @Component({
   selector: 'app-cita-paciente',
   templateUrl: './cita-paciente.component.html',
@@ -34,7 +28,7 @@ export class CitaPacienteComponent implements OnInit {
   @ViewChild('myform') myNgForm : any;
 
   form: FormGroup = new FormGroup({
-    fechaHora: new FormControl('', {validators: [Validators.required, Validators.pattern('^\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}'), validDate()], updateOn: 'blur'}),
+    fechaHora: new FormControl('', {validators: [Validators.required, Validators.pattern('^\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}'), this.validDate()], updateOn: 'blur'}),
     motivoCita: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
     medico: new FormControl('', {validators: [Validators.required], updateOn: 'blur'})
   })
@@ -46,6 +40,11 @@ export class CitaPacienteComponent implements OnInit {
 
   constructor(private modalService: ModalService, private citaService: CitaService) {
   }
+
+  validDate(): ValidatorFn {  
+    return (control: AbstractControl): { [key: string]: any } | null =>
+      moment(control.value, 'DD-MM-YYYY hh:mm').isValid()
+            ? null : {invalidDate: true}}
 
   ngOnInit(): void {
     if (this.readOnly) {
@@ -85,7 +84,7 @@ export class CitaPacienteComponent implements OnInit {
       this.cita.motivoCita = this.form.controls.motivoCita.value;
       this.cita.medico = this.form.controls.medico.value;
       this.cita.paciente = this.paciente;
-      this.citaService.setCita(this.cita);
+      this.citaService.sendNewCita(this.cita);
       this.cancel();
     }
   }

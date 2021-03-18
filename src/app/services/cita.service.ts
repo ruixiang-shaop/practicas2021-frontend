@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Cita } from '../models/cita';
 
 @Injectable({
@@ -21,11 +20,11 @@ export class CitaService {
   constructor(private http: HttpClient) { }
   
 
-  getCita(): Observable<Cita> {
+  retrieveNewCita(): Observable<Cita> {
     return this.cita.asObservable();
   }
 
-  setCita(cita: Cita) { 
+  sendNewCita(cita: Cita) { 
     this.cita.next(cita);  
   }
 
