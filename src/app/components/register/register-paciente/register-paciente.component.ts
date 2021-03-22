@@ -44,6 +44,7 @@ export class RegisterPacienteComponent implements OnInit {
 
       this.registerService.addPaciente(this.paciente)
       .subscribe(
+        data => { alert("Paciente registrado correctamente"); },
         error => { alert("Error. No se ha podido registrar"); },
         ()=>{}
       )
