@@ -37,10 +37,9 @@ export class RegisterMedicoComponent implements OnInit {
   register(): void {
     if (this.form.valid){
       this.medico = this.form.value;
-      console.log(this.medico)
       this.registerService.addMedico(this.medico)
       .subscribe(
-        error => { console.log(error); },
+        error => { alert("Error. No se ha podido registrar"); },
         ()=>{}
       )
     }

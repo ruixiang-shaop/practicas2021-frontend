@@ -16,7 +16,7 @@ export class RegisterPacienteComponent implements OnInit {
   paciente: PacienteRegistro;
   
   form = new FormGroup({
-    usuario: new FormControl(null, {validators: [Validators.required], asyncValidators: [this.usuarioValidator()], updateOn: 'blur'}),
+    usuario: new FormControl('', {validators: [Validators.required], asyncValidators: [this.usuarioValidator()], updateOn: 'blur'}),
     clave: new FormControl('', {validators: [Validators.required, Validators.minLength(6)], updateOn: 'blur'}),
     nombre: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
     apellidos: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
@@ -41,11 +41,10 @@ export class RegisterPacienteComponent implements OnInit {
   register(): void {
     if (this.form.valid){
       this.paciente = this.form.value;
-      console.log(this.paciente)
 
       this.registerService.addPaciente(this.paciente)
       .subscribe(
-        error => { console.log(error); },
+        error => { alert("Error. No se ha podido registrar"); },
         ()=>{}
       )
     }

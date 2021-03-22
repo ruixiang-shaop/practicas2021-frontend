@@ -72,7 +72,6 @@ export class CitaMedicoComponent implements OnInit {
   ngOnChanges() {
     // Read or Edit view
     if (!this.create || this.readOnly) {
-      console.log("changed");
       this.resetForm();
       this.updateForm();
     }
@@ -99,7 +98,6 @@ export class CitaMedicoComponent implements OnInit {
         valoracionEspecialista: this.cita.diagnostico?.valoracionEspecialista,
         enfermedad: this.cita.diagnostico?.enfermedad
       })
-      console.log("valoracion: ",this.cita.diagnostico?.valoracionEspecialista," enfermedad: ",this.cita.diagnostico?.enfermedad)
     }, 0);
   }
 
