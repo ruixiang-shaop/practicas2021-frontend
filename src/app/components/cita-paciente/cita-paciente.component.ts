@@ -50,7 +50,7 @@ export class CitaPacienteComponent implements OnInit {
     if (this.readOnly) {
       let medicoStr = this.cita.medico.nombre + " " + this.cita.medico.apellidos; 
       this.form.patchValue({
-        fechaHora: this.cita.fechaHora.toLocaleString(),
+        fechaHora: moment(this.cita.fechaHora).format('DD-MM-YYYY HH:mm'),
         motivoCita: this.cita.motivoCita,
         medico: medicoStr
       })
