@@ -26,8 +26,8 @@
                 <div *ngIf="form.get('medico').hasError('required') && myform.submitted" class='alert alert-danger'>Seleccione un médico</div>
             </div>
             <button *ngIf="!readOnly" class="btn btn-primary" type="submit">Crear</button>
-            <button *ngIf="readOnly" class="btn btn-primary" (click)="cancel()">Cerrar</button>
-            <button *ngIf="!readOnly" class="btn btn-primary" style="float:right"(click)="cancel()">Cerrar</button>
+            <button *ngIf="readOnly" class="btn btn-primary" type="button" (click)="cancel()">Cerrar</button>
+            <button *ngIf="!readOnly" class="btn btn-primary" style="float:right" type="button" (click)="cancel()">Cerrar</button>
         </form>
     </mat-tab>
     <mat-tab *ngIf="cita?.diagnostico" label="Diagnóstico">
@@ -40,7 +40,7 @@
                 <label for="cita-enfermedad">Enfermedad:</label>
                 <textarea disabled id="cita-enfermedad" formControlName="enfermedad" type="text" class="form-control"></textarea>
             </div>
-            <button class="btn btn-primary" (click)="cancel()">Cerrar</button>
+            <button class="btn btn-primary" type="button" (click)="cancel()">Cerrar</button>
         </form>
     </mat-tab>
 </mat-tab-group>

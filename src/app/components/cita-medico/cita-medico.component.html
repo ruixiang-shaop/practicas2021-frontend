@@ -27,28 +27,25 @@
             </div>
             <button *ngIf="!readOnly && create" class="btn btn-primary" type="submit">Crear</button>
             <button *ngIf="!readOnly && !create" class="btn btn-primary" type="submit">Guardar</button>
-            <button *ngIf="readOnly" class="btn btn-primary" (click)="cancel()">Cerrar</button>
-            <button *ngIf="!readOnly" class="btn btn-primary" style="float:right" (click)="cancel()">Cerrar</button>
+            <button *ngIf="readOnly" class="btn btn-primary" type="button" (click)="cancel()">Cerrar</button>
+            <button *ngIf="!readOnly" class="btn btn-primary" type="button" style="float:right" (click)="cancel()">Cerrar</button>
         </form>
     </mat-tab>
-    <mat-tab *ngIf="cita?.diagnostico || (!readOnly && !create)" label="Diagnóstico">
+    <mat-tab [disabled]="isDiagDisabled()" label="Diagnóstico">
         <form [formGroup]="form2" (ngSubmit)="onSubmitDiag()" #myform2="ngForm">
             <div class="form-group">
                 <label for="cita-valoracion">Valoración del especialista:</label>
                 <textarea id="cita-valoracion" formControlName="valoracionEspecialista" type="text" class="form-control"></textarea>
-            <!--   <div *ngIf="(!readOnly && !create) && form2.get('valoracion').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca su valoración</div>
-            !-->
+                <div *ngIf="form2.get('valoracionEspecialista').hasError('required') && myform2.submitted" class='alert alert-danger'>Introduzca su valoración</div>
             </div>
             <div class="form-group">
                 <label for="cita-enfermedad">Enfermedad:</label>
                 <textarea id="cita-enfermedad" formControlName="enfermedad" type="text" class="form-control"></textarea>
-            <!--    <div *ngIf="(!readOnly && !create) && form2.get('enfermedad').hasError('required') && myform.submitted" class='alert alert-danger'>Introduzca la enfermedad</div>
-           
-            -->
+                <div *ngIf="form2.get('enfermedad').hasError('required') && myform2.submitted" class='alert alert-danger'>Introduzca la enfermedad</div>
             </div>
             <button *ngIf="!readOnly && !create" class="btn btn-primary" type="submit">Guardar</button>
-            <button *ngIf="!readOnly && !create" class="btn btn-primary" style="float:right" (click)="cancel()">Cerrar</button>
-            <button *ngIf="readOnly" class="btn btn-primary" (click)="cancel()">Cerrar</button>
+            <button *ngIf="!readOnly && !create" class="btn btn-primary" type="button" style="float:right" (click)="cancel()">Cerrar</button>
+            <button *ngIf="readOnly" class="btn btn-primary" type="button" (click)="cancel()">Cerrar</button>
         </form>
     </mat-tab>
 </mat-tab-group>

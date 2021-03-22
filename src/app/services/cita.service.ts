@@ -29,11 +29,11 @@ export class CitaService {
     this.newCita.next(cita);  
   }
 
-  retrieveUpdateCita(): Observable<Cita> {
+  retrieveUpdatedCita(): Observable<Cita> {
     return this.updatedCita.asObservable();
   }
 
-  sendUpdateCita(cita: Cita) { 
+  sendUpdatedCita(cita: Cita) { 
     this.updatedCita.next(cita);  
   }
 

@@ -11,7 +11,8 @@ export class DiagnosticoService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   
-  private diagnostico: BehaviorSubject<Diagnostico> = new BehaviorSubject<Diagnostico>(null);
+  private newDiagnostico: BehaviorSubject<Diagnostico> = new BehaviorSubject<Diagnostico>(null);
+  private updatedDiagnostico: BehaviorSubject<Diagnostico> = new BehaviorSubject<Diagnostico>(null);
 
   private addDiagnosticoUrl = '/api/diagnosticos/add';
   private updateDiagnosticoUrl = '/api/diagnosticos/update';
@@ -19,11 +20,19 @@ export class DiagnosticoService {
   constructor(private http: HttpClient) { }
   
   retrieveNewDiagnostico(): Observable<Diagnostico> {
-    return this.diagnostico.asObservable();
+    return this.newDiagnostico.asObservable();
   }
 
   sendNewDiagnostico(diagnostico: Diagnostico) { 
-    this.diagnostico.next(diagnostico);  
+    this.newDiagnostico.next(diagnostico);  
+  }
+    
+  retrieveUpdatedDiagnostico(): Observable<Diagnostico> {
+    return this.updatedDiagnostico.asObservable();
+  }
+
+  sendUpdatedDiagnostico(diagnostico: Diagnostico) { 
+    this.updatedDiagnostico.next(diagnostico);  
   }
 
   addDiagnostico(diagnostico: Diagnostico): Observable<Diagnostico> {
